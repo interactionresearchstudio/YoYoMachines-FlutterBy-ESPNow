@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          path: YOYO-PIR
+          path: YoYoMachines-FlutterBy-ESPNow
 
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
@@ -63,11 +63,11 @@ jobs:
         run: |
           mkdir build
           echo "Compiling ${{github.repository}}..."
-          arduino-cli compile -v -b esp32:esp32:esp32 --build-properties build.partitions=minimal,upload.maximum_size=1966080 --output-dir build YOYO-PIR
+          arduino-cli compile -v -b esp32:esp32:esp32 --build-properties build.partitions=minimal,upload.maximum_size=1966080 --output-dir build YoYoMachines-FlutterBy-ESPNow
 
       - name: Create spiffs binary
         run: |
-          /home/runner/.arduino15/packages/esp32/tools/mkspiffs/0.2.3/mkspiffs -c YOYO-PIR/data -b 4096 -p 256 -s 0xB0000 build/spiffs.bin
+          /home/runner/.arduino15/packages/esp32/tools/mkspiffs/0.2.3/mkspiffs -c YoYoMachines-FlutterBy-ESPNow/data -b 4096 -p 256 -s 0xB0000 build/spiffs.bin
 
       - name: Checkout esp_binary_merger
         uses: actions/checkout@v2
@@ -82,7 +82,7 @@ jobs:
             --bin_path /home/runner/.arduino15/packages/esp32/hardware/esp32/2.0.2/tools/sdk/esp32/bin/bootloader_dio_80m.bin build/ESP32-SOCKETIO.ino.partitions.bin build/ESP32-SOCKETIO.ino.bin build/spiffs.bin \
             --bin_address 0x1000 0x8000 0x10000 0x150000
           mv output/app-combined.bin build/app-combined.bin
-          mv build/YOYO-PIR.ino.bin build/app.bin
+          mv build/YoYoMachines-FlutterBy-ESPNow.ino.bin build/app.bin
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
